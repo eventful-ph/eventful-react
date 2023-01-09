@@ -1,38 +1,18 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: 'PlusJakartaSans';
+  src: url('./fonts/PlusJakartaSans.ttf');
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.eventfulFont {
+  font-weight: bolder !important;
+  background: linear-gradient(82.4deg, #f74e37 27.75%, #b43061 100.25%),
+    linear-gradient(91.35deg, #ffffff 30.43%, #ffffff 122.37%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header {
+  /* background-color: #fdfdfd; */
+  padding: 10px;
 }

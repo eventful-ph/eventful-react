@@ -3,13 +3,45 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from '@emotion/react';
+import { createTheme } from '@mui/material';
+// import PlusJakartaSans from './fonts/PlusJakartaSans.ttf';
+import './App.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const theme = createTheme({
+  typography: { fontFamily: 'PlusJakartaSans' },
+  // components: {
+  //   MuiCssBaseline: {
+  //     styleOverrides: `
+  //       @font-face {
+  //         font-family: 'samim';
+  //         font-style: normal;
+  //         font-display: swap;
+  //         font-weight: 400;
+  //         src: local('PlusJakartaSans'), local('PlusJakartaSans'), url('./fonts/PlusJakartaSans.ttf')}) format('truetype');
+  //         unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+  //       }
+  //     `,
+  //   },
+  // },
+  palette: {
+    primary: { light: '#FFD9D3', main: '#F74E37', dark: '#DF4530' },
+    secondary: { light: '#FFC6D5', main: '#BF355A', dark: '#832D440' },
+    info: { light: '#CDDEFF', main: '#71A0FA', dark: '#2F9546' },
+    success: { light: '#E0FFD4', main: '#3CB95F', dark: '#2C5FC2' },
+    warning: { light: '#FFDBC0', main: '#F99C59', dark: '#D97227' },
+    error: { light: '#FFDCD4', main: '#F55858', dark: '#D42C22' },
+  },
+});
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
 
