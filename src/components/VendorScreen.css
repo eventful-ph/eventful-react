@@ -1,0 +1,20 @@
+.event-logo {
+  /* margin-left: 604px;
+  margin-right: 604px; */
+  /* margin-top: 207px; */
+}
+
+.reg-as-vendor {
+  /* line-height: 30px; */
+  margin-top: 22px !important;
+  margin-bottom: 8px !important;
+}
+
+.mainVendorDiv {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  text-align: center;
+  margin-top: 207px;
+  margin-bottom: 207px;
+}

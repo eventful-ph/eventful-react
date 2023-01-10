@@ -1,19 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import Header from './components/Header/HeaderMain';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
-// import PlusJakartaSans from './fonts/PlusJakartaSans.ttf';
-import './App.css';
+import VendorScreen from './components/VendorScreen';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 const theme = createTheme({
-  typography: { fontFamily: 'PlusJakartaSans' },
+  typography: {
+    fontFamily: 'PlusJakartaSans',
+    h3: { fontSize: 28, color: '#2f2f2f', fontWeight: 700 },
+  },
   // components: {
   //   MuiCssBaseline: {
   //     styleOverrides: `
@@ -37,10 +39,12 @@ const theme = createTheme({
     error: { light: '#FFDCD4', main: '#F55858', dark: '#D42C22' },
   },
 });
+
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      {/* <Header /> */}
+      <VendorScreen />
     </ThemeProvider>
   </React.StrictMode>
 );
