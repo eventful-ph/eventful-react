@@ -18,3 +18,28 @@
   margin-top: 207px;
   margin-bottom: 207px;
 }
+
+.vendor-form-div {
+  padding: 8px;
+}
+
+.tell-us-div {
+  margin-bottom: 24px;
+}
+.tell-us-font {
+  font-size: 18px !important;
+  line-height: 22px !important;
+  font-weight: 700 !important;
+  margin-bottom: 4px !important;
+}
+
+.tell-us-caption {
+  font-size: 12px !important;
+  line-height: 16px !important;
+  font-weight: 400 !important;
+  color: #5f5f5f;
+}
+
+.mainTextDiv {
+  margin-bottom: 50px;
+}
