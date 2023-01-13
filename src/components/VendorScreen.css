@@ -16,7 +16,8 @@
   justify-content: center;
   text-align: center;
   margin-top: 207px;
-  margin-bottom: 207px;
+  /* margin-bottom: 207px; */
+  min-height: 100vh;
 }
 
 .vendor-form-div {

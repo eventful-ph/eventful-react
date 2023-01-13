@@ -1,0 +1,11 @@
+.textbox-div {
+  display: grid;
+}
+
+.textbox-label {
+  font-size: 12px !important;
+  line-height: 16px !important;
+  font-weight: 500 !important;
+  color: #2f2f2f;
+  padding-bottom: 4px;
+}
