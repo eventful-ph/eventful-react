@@ -6,7 +6,7 @@ type TextboxType = {
   name: string;
 };
 
-export function Textbox({ name, ...props }: TextboxType) {
+export default function Textbox({ name, ...props }: TextboxType) {
   return (
     <div className='textbox-div'>
       <Typography className='textbox-label'>{name}</Typography>

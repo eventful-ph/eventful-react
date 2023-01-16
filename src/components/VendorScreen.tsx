@@ -2,19 +2,15 @@ import React from 'react';
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   Container,
-  Link,
   Paper,
-  TextField,
   Typography,
 } from '@mui/material';
-import Box from '@mui/material/Box';
 
 import './VendorScreen.css';
-import { maxHeight, Stack } from '@mui/system';
-import { Textbox } from './TextField/Textbox';
+import { Stack } from '@mui/system';
+import Textbox from './TextField/Textbox';
 
 function VendorScreen() {
   return (
