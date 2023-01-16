@@ -76,40 +76,43 @@ function VendorScreen() {
       </div>
       <Paper
         sx={{
-          width: '100%',
           borderTop: '1px solid #E4E4E4',
           backgroundColor: '#F5F6F8',
-          padding: 0,
-          minHeight: '96px',
+          // display: 'flex',
         }}
         component='footer'
         square
         variant='outlined'
       >
-        <Container maxWidth='xl'>
-          <Box
-            sx={{
-              flexGrow: 1,
-              justifyContent: 'center',
-              display: 'flex',
-              // my: 1,
+        <Container
+          maxWidth='xl'
+          sx={{
+            width: '100%',
+            display: 'flex',
+            minHeight: '96px',
+            alignItems: 'center',
+          }}
+        >
+          <Typography className='caption-bold' sx={{ marginRight: '24px' }}>
+            Eventful © 2023
+          </Typography>{' '}
+          <div
+            style={{
+              width: 0,
+              height: 16,
+              border: '1px solid #5F5F5F',
+              marginRight: '24px',
             }}
+          ></div>
+          <Typography
+            className='caption-bold'
+            sx={{ color: '#5F5F5F', marginRight: '24px' }}
           >
-            <Link href='/'>TEST</Link>
-          </Box>
-
-          <Box
-            sx={{
-              flexGrow: 1,
-              justifyContent: 'center',
-              display: 'flex',
-              margin: 0,
-            }}
-          >
-            <Typography variant='caption' color='initial'>
-              Copyright ©2022. [] Limited
-            </Typography>
-          </Box>
+            Terms and Conditions
+          </Typography>
+          <Typography className='caption-bold' sx={{ color: '#5F5F5F' }}>
+            Privacy Policy
+          </Typography>
         </Container>
       </Paper>
     </>

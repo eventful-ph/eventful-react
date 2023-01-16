@@ -12,6 +12,12 @@ body {
   src: url('./assets/fonts/PlusJakartaSans.ttf');
 }
 
+.caption-bold {
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+}
+
 /* .paragraph-lead-bold {
   font-weight: 700;
 } */
