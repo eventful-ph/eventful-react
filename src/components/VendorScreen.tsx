@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Card,
   CardContent,
-  Container,
-  Paper,
+  TextField,
   Typography,
 } from '@mui/material';
 
 import './VendorScreen.css';
 import { Stack } from '@mui/system';
 import Textbox from './TextField/Textbox';
+import Footer from './Footer/Footer';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 
 function VendorScreen() {
+  const [formData, setFormData] = useState<any>({
+    firstName: '',
+    lastName: '',
+    contactNo: '+63',
+    birthDate: null,
+  });
   return (
     <>
       <div className='mainVendorDiv'>
@@ -59,10 +67,32 @@ function VendorScreen() {
                   noValidate
                   autoComplete='off'
                 >
-                  <Textbox name='First Name' />
-                  <Textbox name='Last Name' />
-                  <Textbox name='Contact Number' />
-                  <Textbox name='Birthday' />
+                  <Textbox
+                    label='First Name'
+                    value={formData.firstName}
+                    onChange={(v) => setFormData({ ...formData, firstName: v })}
+                  />
+                  <Textbox
+                    label='Last Name'
+                    value={formData.lastName}
+                    onChange={(v) => setFormData({ ...formData, lastName: v })}
+                  />
+                  <Textbox
+                    label='Contact Number'
+                    value={formData.contactNo}
+                    onChange={(v) => setFormData({ ...formData, contactNo: v })}
+                  />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label='Birthdate'
+                      value={formData.birthDate}
+                      onChange={(v) =>
+                        setFormData({ ...formData, birthDate: v })
+                      }
+                      renderInput={(params: any) => <Textbox {...params} />}
+                    />
+                  </LocalizationProvider>
+
                   <Button variant='contained'>Next</Button>
                 </Stack>
               </div>
@@ -70,47 +100,7 @@ function VendorScreen() {
           </Card>
         </div>
       </div>
-      <Paper
-        sx={{
-          borderTop: '1px solid #E4E4E4',
-          backgroundColor: '#F5F6F8',
-          // display: 'flex',
-        }}
-        component='footer'
-        square
-        variant='outlined'
-      >
-        <Container
-          maxWidth='xl'
-          sx={{
-            width: '100%',
-            display: 'flex',
-            minHeight: '96px',
-            alignItems: 'center',
-          }}
-        >
-          <Typography className='caption-bold' sx={{ marginRight: '24px' }}>
-            Eventful © 2023
-          </Typography>{' '}
-          <div
-            style={{
-              width: 0,
-              height: 16,
-              border: '1px solid #5F5F5F',
-              marginRight: '24px',
-            }}
-          ></div>
-          <Typography
-            className='caption-bold'
-            sx={{ color: '#5F5F5F', marginRight: '24px' }}
-          >
-            Terms and Conditions
-          </Typography>
-          <Typography className='caption-bold' sx={{ color: '#5F5F5F' }}>
-            Privacy Policy
-          </Typography>
-        </Container>
-      </Paper>
+      <Footer />
     </>
   );
 }
