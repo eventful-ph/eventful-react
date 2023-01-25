@@ -11,6 +11,9 @@ const root = ReactDOM.createRoot(
 );
 
 const theme = createTheme({
+  // components: {
+  //   MuiPaper: { styleOverrides: { root: { overflow: 'visible' } } },
+  // },
   typography: {
     fontFamily: 'PlusJakartaSans',
     h3: { fontSize: 28, color: '#2f2f2f', fontWeight: 700 },
