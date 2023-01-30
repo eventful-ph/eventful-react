@@ -5,7 +5,7 @@ import {
   CardContent,
   Input,
   InputAdornment,
-  InputLabel,
+  TextField,
   Typography,
 } from '@mui/material';
 
@@ -180,7 +180,53 @@ const VendorSignupPage3 = ({
 
           <Stack component='form' spacing={2} noValidate autoComplete='off'>
             {/* <InputLabel htmlFor='import-button' style={styles.importLabel}> */}
-            <Input
+
+            <Textbox
+              sx={{ paddingRight: 0 }}
+              defaultValue='Valid ID'
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end' sx={{ paddingRight: 0 }}>
+                    <Button sx={{ minWidth: 0 }}>View</Button>
+                    <Button sx={{ padding: 0, minWidth: 0 }}>
+                      <img
+                        src={require('../assets/images/trash.png')}
+                        alt='Remove'
+                      />
+                    </Button>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Textbox
+              sx={{ paddingRight: 0 }}
+              defaultValue='Business Permit'
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end' sx={{ paddingRight: 0 }}>
+                    <Button sx={{ minWidth: 0 }}>View</Button>
+                    <Button sx={{ padding: 0, minWidth: 0 }}>
+                      <img
+                        src={require('../assets/images/trash.png')}
+                        alt='Remove'
+                      />
+                    </Button>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Textbox
+              sx={{ paddingRight: 0 }}
+              defaultValue="Mayor's Permit"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <Button sx={{ minWidth: 0 }}>Upload</Button>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {/* <Input
               inputProps={{
                 accept:
                   '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
@@ -189,7 +235,7 @@ const VendorSignupPage3 = ({
                 setFormData({ ...formData, businessName: e?.target?.value })
               }
               type='file'
-            />
+            /> */}
             <div style={{ marginLeft: 'auto' }}>
               <Button
                 sx={{ mr: 1 }}
