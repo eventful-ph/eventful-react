@@ -146,15 +146,6 @@ const VendorSignupPage3 = ({
   setFormData,
   setPage = () => {},
 }: VendorPage1Type) => {
-  const styles = {
-    hidden: {
-      display: 'none',
-    },
-    importLabel: {
-      color: 'black',
-    },
-  };
-
   return (
     <Card
       sx={{
