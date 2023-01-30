@@ -51,7 +51,7 @@ export function UploadTextbox(
 ) {
   return (
     <Textbox
-      textboxDivClass='upload-textbox-div'
+      textboxDivClass='textbox-div upload-textbox-div'
       disabled
       sx={{ paddingRight: 0 }}
       value={value}
