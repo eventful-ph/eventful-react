@@ -3,15 +3,13 @@ import {
   Button,
   Card,
   CardContent,
-  Input,
   InputAdornment,
-  TextField,
   Typography,
 } from '@mui/material';
 
 import './VendorScreen.css';
 import { Stack } from '@mui/system';
-import Textbox from './TextField/Textbox';
+import Textbox, { UploadTextbox } from './TextField/Textbox';
 import Footer from './Footer/Footer';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -179,42 +177,32 @@ const VendorSignupPage3 = ({
           </div>
 
           <Stack component='form' spacing={2} noValidate autoComplete='off'>
-            {/* <InputLabel htmlFor='import-button' style={styles.importLabel}> */}
+            <UploadTextbox
+              value={formData.validIdName}
+              fileId='v-id-file'
+              label='Valid ID'
+              onChange={(e: any) =>
+                setFormData({
+                  ...formData,
+                  validIdName: e?.target?.files && e?.target?.files[0].name,
+                  validIdFile: e?.target?.files && e?.target?.files[0],
+                })
+              }
+            />
+            <UploadTextbox
+              value={formData.businessPermitName}
+              label='Business Permit'
+              fileId='bs-permit-file'
+              onChange={(e: any) =>
+                setFormData({
+                  ...formData,
+                  businessPermitName:
+                    e?.target?.files && e?.target?.files[0].name,
+                  businessPermitFile: e?.target?.files && e?.target?.files[0],
+                })
+              }
+            />
 
-            <Textbox
-              sx={{ paddingRight: 0 }}
-              defaultValue='Valid ID'
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end' sx={{ paddingRight: 0 }}>
-                    <Button sx={{ minWidth: 0 }}>View</Button>
-                    <Button sx={{ padding: 0, minWidth: 0 }}>
-                      <img
-                        src={require('../assets/images/trash.png')}
-                        alt='Remove'
-                      />
-                    </Button>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Textbox
-              sx={{ paddingRight: 0 }}
-              defaultValue='Business Permit'
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end' sx={{ paddingRight: 0 }}>
-                    <Button sx={{ minWidth: 0 }}>View</Button>
-                    <Button sx={{ padding: 0, minWidth: 0 }}>
-                      <img
-                        src={require('../assets/images/trash.png')}
-                        alt='Remove'
-                      />
-                    </Button>
-                  </InputAdornment>
-                ),
-              }}
-            />
             <Textbox
               sx={{ paddingRight: 0 }}
               defaultValue="Mayor's Permit"
@@ -225,17 +213,8 @@ const VendorSignupPage3 = ({
                   </InputAdornment>
                 ),
               }}
+              disabled
             />
-            {/* <Input
-              inputProps={{
-                accept:
-                  '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
-              }}
-              onChange={(e: any) =>
-                setFormData({ ...formData, businessName: e?.target?.value })
-              }
-              type='file'
-            /> */}
             <div style={{ marginLeft: 'auto' }}>
               <Button
                 sx={{ mr: 1 }}
@@ -263,6 +242,12 @@ function VendorScreen() {
     businessName: '',
     businessCategory: '',
     officeLocation: '',
+    validIdName: undefined,
+    validIdFile: undefined,
+    businessPermitName: undefined,
+    businessPermitFile: undefined,
+    mayorsPermitName: undefined,
+    mayorsPermitFile: undefined,
   });
 
   const [page, setPage] = useState<number>(1);

@@ -17,6 +17,7 @@ const theme = createTheme({
   typography: {
     fontFamily: 'PlusJakartaSans',
     h3: { fontSize: 28, color: '#2f2f2f', fontWeight: 700 },
+    button: { textTransform: 'none' },
   },
   // components: {
   //   MuiCssBaseline: {

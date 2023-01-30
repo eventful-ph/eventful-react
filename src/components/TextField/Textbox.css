@@ -2,7 +2,7 @@
   display: grid;
 }
 
-.textbox-div div[class*='MuiOutlinedInput-root'] {
+.upload-textbox-div div[class*='MuiOutlinedInput-root'] {
   padding-right: 0;
 }
 
