@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Button,
   Card,
@@ -52,10 +52,7 @@ const VendorSignupPage1 = ({
             <DateField name='birthDate' label='Birthdate' control={control} />
             <Button
               variant='contained'
-              onClick={() => {
-                console.log('clicked', handleSubmit);
-                handleSubmit(() => setValue('page', 2))();
-              }}
+              onClick={() => handleSubmit(() => setValue('page', 2))()}
             >
               Next
             </Button>
@@ -119,13 +116,13 @@ const VendorSignupPage2 = ({
                 sx={{ mr: 1 }}
                 variant='contained'
                 color='warning'
-                // onClick={() => setPage(1)}
+                onClick={() => setValue('page', 1)}
               >
                 Back
               </Button>
               <Button
                 variant='contained'
-                // onClick={() => setPage(3)}
+                onClick={() => handleSubmit(() => setValue('page', 3))()}
               >
                 Next
               </Button>
@@ -164,31 +161,33 @@ const VendorSignupPage3 = ({
           </div>
 
           <Stack component='form' spacing={2} noValidate autoComplete='off'>
-            {/* <UploadTextbox
-              value={formData.validIdName}
-              fileId='v-id-file'
+            <UploadTextbox
               label='Valid ID'
-              onChange={(e: any) =>
-                setFormData({
-                  ...formData,
-                  validIdName: e?.target?.files && e?.target?.files[0].name,
-                  validIdFile: e?.target?.files && e?.target?.files[0],
-                })
-              }
+              fileId='v-id-file'
+              name='validIdName'
+              control={control}
+              // onChange={(e: any) =>
+              //   setFormData({
+              //     ...formData,
+              //     validIdName: e?.target?.files && e?.target?.files[0].name,
+              //     validIdFile: e?.target?.files && e?.target?.files[0],
+              //   })
+              // }
             />
             <UploadTextbox
-              value={formData.businessPermitName}
               label='Business Permit'
               fileId='bs-permit-file'
-              onChange={(e: any) =>
-                setFormData({
-                  ...formData,
-                  businessPermitName:
-                    e?.target?.files && e?.target?.files[0].name,
-                  businessPermitFile: e?.target?.files && e?.target?.files[0],
-                })
-              }
-            /> */}
+              name='businessPermitName'
+              control={control}
+              // onChange={(e: any) =>
+              //   setFormData({
+              //     ...formData,
+              //     businessPermitName:
+              //       e?.target?.files && e?.target?.files[0].name,
+              //     businessPermitFile: e?.target?.files && e?.target?.files[0],
+              //   })
+              // }
+            />
 
             <Textbox
               sx={{ paddingRight: 0 }}
@@ -207,11 +206,16 @@ const VendorSignupPage3 = ({
                 sx={{ mr: 1 }}
                 variant='contained'
                 color='warning'
-                // onClick={() => setPage(2)}
+                onClick={() => setValue('page', 2)}
               >
                 Back
               </Button>
-              <Button variant='contained'>Submit Application</Button>
+              <Button
+                variant='contained'
+                onClick={() => handleSubmit(() => {})()}
+              >
+                Submit Application
+              </Button>
             </div>
           </Stack>
         </div>

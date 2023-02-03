@@ -18,7 +18,6 @@ interface ITextboxProps {
   textboxDivClass?: any;
   error?: any;
 }
-
 export default function Textbox(
   {
     name = '',
@@ -39,7 +38,7 @@ export default function Textbox(
     <div className={textboxDivClass}>
       <Typography className='textbox-label'>{label}</Typography>
       <TextField
-        error={!!controlError}
+        error={!!(controlError || error)}
         variant='outlined'
         size='small'
         sx={sx}
@@ -53,9 +52,7 @@ export default function Textbox(
         disabled={disabled}
         {...props}
       />
-      <Typography className='error-text' variant='caption'>
-        {controlError && controlError.message}
-      </Typography>
+      <ErrorText controlError={controlError || error} />
     </div>
   );
 
@@ -78,15 +75,16 @@ export default function Textbox(
 }
 
 export function UploadTextbox(
-  { label, fileId, value, onChange = () => {} }: any,
+  { label, name, fileId, value, onChange = () => {}, control }: any,
   ...props: any
 ) {
-  return (
+  const Field = ({ field, controlError }: any) => (
     <Textbox
+      error={controlError}
       textboxDivClass='textbox-div upload-textbox-div'
       disabled
       sx={{ paddingRight: 0 }}
-      value={value}
+      value={field?.value || value}
       defaultValue={label}
       InputProps={{
         endAdornment: (
@@ -95,7 +93,13 @@ export function UploadTextbox(
               accept='image/*'
               id={fileId}
               type='file'
-              onChange={onChange}
+              onChange={(e) => {
+                onChange(e?.target?.files && e?.target?.files[0].name);
+                field &&
+                  field.onChange(e?.target?.files && e?.target?.files[0].name);
+                // validIdName: e?.target?.files && e?.target?.files[0].name,
+                // validIdFile: e?.target?.files && e?.target?.files[0],
+              }}
               hidden
             />
             <label htmlFor={fileId}>
@@ -115,6 +119,23 @@ export function UploadTextbox(
       {...props}
     />
   );
+
+  if (control && name)
+    return (
+      <Controller
+        name={name}
+        render={(props) => {
+          const {
+            field,
+            fieldState: { error },
+          } = props;
+          return <Field field={field} controlError={error} />;
+        }}
+        control={control}
+      />
+    );
+
+  return <Field />;
 }
 
 export function DateField({
@@ -127,17 +148,18 @@ export function DateField({
   const Field = ({ field, controlError }: any) => (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
-        // {...props}
+        className='date-field'
         label={label}
         value={field.value}
         onChange={(v) => {
-          console.log(v, 'v');
           if (!v) return;
           onChange && onChange(v);
           field && field.onChange(v);
         }}
         renderInput={({ inputProps: { value }, ...params }: any) => (
-          <Textbox {...params} value={value} />
+          <div>
+            <Textbox {...params} value={value} error={controlError} />
+          </div>
         )}
       />
     </LocalizationProvider>
@@ -155,5 +177,15 @@ export function DateField({
       }}
       control={control}
     />
+  );
+}
+
+function ErrorText({ controlError }: any) {
+  return (
+    controlError && (
+      <Typography className='error-text' variant='caption'>
+        {controlError && controlError.message}
+      </Typography>
+    )
   );
 }

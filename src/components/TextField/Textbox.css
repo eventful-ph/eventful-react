@@ -17,3 +17,7 @@
 .error-text {
   color: red;
 }
+
+.date-field {
+  padding-bottom: 0;
+}
