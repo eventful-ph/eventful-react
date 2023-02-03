@@ -1,3 +1,4 @@
+/* eslint-disable no-control-regex */
 export function validateMobile(num: string): boolean {
   return new RegExp(/^(0?9|\+?639)\d{9}$/).test(num);
 }
