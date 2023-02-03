@@ -1,10 +1,14 @@
 import React from 'react';
 import { Button, InputAdornment, TextField, Typography } from '@mui/material';
+import { Controller, Control } from 'react-hook-form';
 import './Textbox.css';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 interface ITextboxProps {
-  label?: string;
   name?: string;
+  label?: string;
+  control?: Control<any>;
   value?: string | Date;
   defaultValue?: string;
   onChange?: (v: any) => any;
@@ -12,10 +16,13 @@ interface ITextboxProps {
   sx?: any;
   disabled?: boolean;
   textboxDivClass?: any;
+  error?: any;
 }
 
 export default function Textbox(
   {
+    name = '',
+    control,
     label,
     value,
     defaultValue,
@@ -24,25 +31,50 @@ export default function Textbox(
     InputProps,
     disabled,
     textboxDivClass = 'textbox-div',
+    error,
   }: ITextboxProps,
   ...props: any
 ) {
-  return (
+  const Field = ({ field, controlError }: any) => (
     <div className={textboxDivClass}>
       <Typography className='textbox-label'>{label}</Typography>
       <TextField
+        error={!!controlError}
         variant='outlined'
         size='small'
         sx={sx}
-        value={value}
+        value={field?.value || value}
         defaultValue={defaultValue}
-        onChange={(e) => onChange(e?.target?.value)}
+        onChange={(e) => {
+          onChange(e?.target?.value);
+          field && field.onChange(e?.target?.value);
+        }}
         InputProps={InputProps}
         disabled={disabled}
         {...props}
       />
+      <Typography className='error-text' variant='caption'>
+        {controlError && controlError.message}
+      </Typography>
     </div>
   );
+
+  if (control && name)
+    return (
+      <Controller
+        name={name}
+        render={(props) => {
+          const {
+            field,
+            fieldState: { error },
+          } = props;
+          return <Field field={field} controlError={error} />;
+        }}
+        control={control}
+      />
+    );
+
+  return <Field />;
 }
 
 export function UploadTextbox(
@@ -81,6 +113,47 @@ export function UploadTextbox(
         ),
       }}
       {...props}
+    />
+  );
+}
+
+export function DateField({
+  name,
+  label,
+  control,
+  onChange = () => {},
+  ...props
+}: any) {
+  const Field = ({ field, controlError }: any) => (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        // {...props}
+        label={label}
+        value={field.value}
+        onChange={(v) => {
+          console.log(v, 'v');
+          if (!v) return;
+          onChange && onChange(v);
+          field && field.onChange(v);
+        }}
+        renderInput={({ inputProps: { value }, ...params }: any) => (
+          <Textbox {...params} value={value} />
+        )}
+      />
+    </LocalizationProvider>
+  );
+
+  return (
+    <Controller
+      name={name}
+      render={(props) => {
+        const {
+          field,
+          fieldState: { error },
+        } = props;
+        return <Field field={field} controlError={error} />;
+      }}
+      control={control}
     />
   );
 }

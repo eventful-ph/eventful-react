@@ -6,25 +6,27 @@ import {
   InputAdornment,
   Typography,
 } from '@mui/material';
+import { useForm, Control } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import './VendorScreen.css';
 import { Stack } from '@mui/system';
-import Textbox, { UploadTextbox } from './TextField/Textbox';
+import Textbox, { DateField, UploadTextbox } from './TextField/Textbox';
 import Footer from './Footer/Footer';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import Selectbox from './Select/Selectbox';
+import vendorSignupForm from '../utils/formSchema/vendorSignup/VendorSignupForm';
+import { useWatch } from 'react-hook-form';
 
 type VendorPage1Type = {
-  formData: any;
-  setFormData: (v: any) => void;
-  setPage?: (page: number) => void;
+  control?: Control<any>;
+  handleSubmit: (h: any, e?: any) => any;
+  setValue?: any;
 };
 
 const VendorSignupPage1 = ({
-  formData,
-  setFormData,
-  setPage = () => {},
+  control,
+  handleSubmit = () => {},
+  setValue,
 }: VendorPage1Type) => {
   return (
     <Card sx={{ minWidth: 512, minHeight: 462, textAlign: 'left' }}>
@@ -40,30 +42,21 @@ const VendorSignupPage1 = ({
           </div>
 
           <Stack component='form' spacing={2} noValidate autoComplete='off'>
-            <Textbox
-              label='First Name'
-              value={formData.firstName}
-              onChange={(v) => setFormData({ ...formData, firstName: v })}
-            />
-            <Textbox
-              label='Last Name'
-              value={formData.lastName}
-              onChange={(v) => setFormData({ ...formData, lastName: v })}
-            />
+            <Textbox label='First Name' name='firstName' control={control} />
+            <Textbox label='Last Name' name='lastName' control={control} />
             <Textbox
               label='Contact Number'
-              value={formData.contactNo}
-              onChange={(v) => setFormData({ ...formData, contactNo: v })}
+              name='contactNo'
+              control={control}
             />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label='Birthdate'
-                value={formData.birthDate}
-                onChange={(v) => setFormData({ ...formData, birthDate: v })}
-                renderInput={(params: any) => <Textbox {...params} />}
-              />
-            </LocalizationProvider>
-            <Button variant='contained' onClick={() => setPage(2)}>
+            <DateField name='birthDate' label='Birthdate' control={control} />
+            <Button
+              variant='contained'
+              onClick={() => {
+                console.log('clicked', handleSubmit);
+                handleSubmit(() => setValue('page', 2))();
+              }}
+            >
               Next
             </Button>
           </Stack>
@@ -74,9 +67,9 @@ const VendorSignupPage1 = ({
 };
 
 const VendorSignupPage2 = ({
-  formData,
-  setFormData,
-  setPage = () => {},
+  control,
+  handleSubmit,
+  setValue,
 }: VendorPage1Type) => {
   return (
     <Card
@@ -102,14 +95,14 @@ const VendorSignupPage2 = ({
           <Stack component='form' spacing={2} noValidate autoComplete='off'>
             <Textbox
               label='Business Name'
-              value={formData.businessName}
-              onChange={(v) => setFormData({ ...formData, businessName: v })}
+              name='businessName'
+              control={control}
             />
             <Selectbox label='Select which applies to your business' />
             <Textbox
               label='Office Location'
-              value={formData.officeLocation}
-              onChange={(v) => setFormData({ ...formData, officeLocation: v })}
+              name='officeLocation'
+              control={control}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -126,11 +119,14 @@ const VendorSignupPage2 = ({
                 sx={{ mr: 1 }}
                 variant='contained'
                 color='warning'
-                onClick={() => setPage(1)}
+                // onClick={() => setPage(1)}
               >
                 Back
               </Button>
-              <Button variant='contained' onClick={() => setPage(3)}>
+              <Button
+                variant='contained'
+                // onClick={() => setPage(3)}
+              >
                 Next
               </Button>
             </div>
@@ -142,9 +138,9 @@ const VendorSignupPage2 = ({
 };
 
 const VendorSignupPage3 = ({
-  formData,
-  setFormData,
-  setPage = () => {},
+  control,
+  handleSubmit,
+  setValue,
 }: VendorPage1Type) => {
   return (
     <Card
@@ -168,7 +164,7 @@ const VendorSignupPage3 = ({
           </div>
 
           <Stack component='form' spacing={2} noValidate autoComplete='off'>
-            <UploadTextbox
+            {/* <UploadTextbox
               value={formData.validIdName}
               fileId='v-id-file'
               label='Valid ID'
@@ -192,7 +188,7 @@ const VendorSignupPage3 = ({
                   businessPermitFile: e?.target?.files && e?.target?.files[0],
                 })
               }
-            />
+            /> */}
 
             <Textbox
               sx={{ paddingRight: 0 }}
@@ -211,7 +207,7 @@ const VendorSignupPage3 = ({
                 sx={{ mr: 1 }}
                 variant='contained'
                 color='warning'
-                onClick={() => setPage(2)}
+                // onClick={() => setPage(2)}
               >
                 Back
               </Button>
@@ -225,9 +221,9 @@ const VendorSignupPage3 = ({
 };
 
 function VendorScreen() {
-  const [formData, setFormData] = useState<any>({
-    firstName: '',
-    lastName: '',
+  const defaultData = {
+    firstName: undefined,
+    lastName: undefined,
     contactNo: '+63',
     birthDate: null,
     businessName: '',
@@ -239,13 +235,19 @@ function VendorScreen() {
     businessPermitFile: undefined,
     mayorsPermitName: undefined,
     mayorsPermitFile: undefined,
+    page: 1,
+  };
+
+  const { control, handleSubmit, setValue } = useForm<any>({
+    mode: 'all',
+    defaultValues: defaultData,
+    resolver: yupResolver(vendorSignupForm),
   });
 
-  const [page, setPage] = useState<number>(1);
-
-  useEffect(() => {
-    console.log('form has been modified');
-  }, [formData]);
+  const page = useWatch({
+    control,
+    name: 'page',
+  });
 
   return (
     <>
@@ -269,23 +271,23 @@ function VendorScreen() {
           </div>
           {page === 1 && (
             <VendorSignupPage1
-              formData={formData}
-              setFormData={setFormData}
-              setPage={setPage}
+              control={control}
+              handleSubmit={handleSubmit}
+              setValue={setValue}
             />
           )}
           {page === 2 && (
             <VendorSignupPage2
-              formData={formData}
-              setFormData={setFormData}
-              setPage={setPage}
+              control={control}
+              handleSubmit={handleSubmit}
+              setValue={setValue}
             />
           )}
           {page === 3 && (
             <VendorSignupPage3
-              formData={formData}
-              setFormData={setFormData}
-              setPage={setPage}
+              control={control}
+              handleSubmit={handleSubmit}
+              setValue={setValue}
             />
           )}
         </div>
